@@ -8,62 +8,12 @@ const PORT = process.env.PORT || 3000
 // Middleware
 app.use(cors())
 app.use(express.json())
-app.use(express.static("public"))
 
-// In-memory database (in production, use a real database)
-const studentsDatabase = [
-  {
-    rollNumber: "2024001",
-    name: "John Doe",
-    class: "10th Grade",
-    marks: [
-      { subject: "Mathematics", marks: 85 },
-      { subject: "Science", marks: 92 },
-      { subject: "English", marks: 78 },
-    ],
-    attendance: [
-      { date: "2024-01-15", status: "Present" },
-      { date: "2024-01-16", status: "Present" },
-      { date: "2024-01-17", status: "Absent" },
-      { date: "2024-01-18", status: "Present" },
-      { date: "2024-01-19", status: "Present" },
-    ],
-  },
-  {
-    rollNumber: "2024002",
-    name: "Jane Smith",
-    class: "10th Grade",
-    marks: [
-      { subject: "Mathematics", marks: 95 },
-      { subject: "Science", marks: 88 },
-      { subject: "English", marks: 91 },
-    ],
-    attendance: [
-      { date: "2024-01-15", status: "Present" },
-      { date: "2024-01-16", status: "Present" },
-      { date: "2024-01-17", status: "Present" },
-      { date: "2024-01-18", status: "Present" },
-      { date: "2024-01-19", status: "Absent" },
-    ],
-  },
-  {
-    rollNumber: "2024003",
-    name: "Mike Johnson",
-    class: "9th Grade",
-    marks: [
-      { subject: "Mathematics", marks: 72 },
-      { subject: "Science", marks: 79 },
-      { subject: "English", marks: 85 },
-    ],
-    attendance: [
-      { date: "2024-01-15", status: "Present" },
-      { date: "2024-01-16", status: "Absent" },
-      { date: "2024-01-17", status: "Present" },
-      { date: "2024-01-18", status: "Present" },
-      { date: "2024-01-19", status: "Present" },
-    ],
-  },
-]
+// Since static files are now in the root directory, 
+// we will serve them explicitly or serve root directory as static.
+
+// Option 1: Serve the entire root directory's static files (including index.html, css, js)
+app.use(express.static(__dirname))
 
 // API Routes
 
@@ -168,9 +118,9 @@ app.delete("/api/student/:rollNumber", (req, res) => {
   }
 })
 
-// Serve the main HTML file
+// Serve the main HTML file on root
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"))
+  res.sendFile(path.join(__dirname, "index.html"))
 })
 
 // Start server
@@ -181,3 +131,58 @@ app.listen(PORT, () => {
   console.log("   - Roll Number: 2024002 (Jane Smith)")
   console.log("   - Roll Number: 2024003 (Mike Johnson)")
 })
+
+// In-memory database (keep it here or move above API routes for clarity)
+const studentsDatabase = [
+  {
+    rollNumber: "2024001",
+    name: "John Doe",
+    class: "10th Grade",
+    marks: [
+      { subject: "Mathematics", marks: 85 },
+      { subject: "Science", marks: 92 },
+      { subject: "English", marks: 78 },
+    ],
+    attendance: [
+      { date: "2024-01-15", status: "Present" },
+      { date: "2024-01-16", status: "Present" },
+      { date: "2024-01-17", status: "Absent" },
+      { date: "2024-01-18", status: "Present" },
+      { date: "2024-01-19", status: "Present" },
+    ],
+  },
+  {
+    rollNumber: "2024002",
+    name: "Jane Smith",
+    class: "10th Grade",
+    marks: [
+      { subject: "Mathematics", marks: 95 },
+      { subject: "Science", marks: 88 },
+      { subject: "English", marks: 91 },
+    ],
+    attendance: [
+      { date: "2024-01-15", status: "Present" },
+      { date: "2024-01-16", status: "Present" },
+      { date: "2024-01-17", status: "Present" },
+      { date: "2024-01-18", status: "Present" },
+      { date: "2024-01-19", status: "Absent" },
+    ],
+  },
+  {
+    rollNumber: "2024003",
+    name: "Mike Johnson",
+    class: "9th Grade",
+    marks: [
+      { subject: "Mathematics", marks: 72 },
+      { subject: "Science", marks: 79 },
+      { subject: "English", marks: 85 },
+    ],
+    attendance: [
+      { date: "2024-01-15", status: "Present" },
+      { date: "2024-01-16", status: "Absent" },
+      { date: "2024-01-17", status: "Present" },
+      { date: "2024-01-18", status: "Present" },
+      { date: "2024-01-19", status: "Present" },
+    ],
+  },
+]
